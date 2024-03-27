@@ -16,7 +16,7 @@ function ProfileScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [profilePhoto,setProfilePhoto]=useState();
+  const [profilePhoto,setProfilePhoto]=useState('');
   const [selectedFile,setSelectedFile]=useState(null)
 
 
@@ -40,10 +40,12 @@ function ProfileScreen() {
   },[userInfo.setName,userInfo.setEmail,userInfo.profilePhoto]);
 
   const handleFileChange = (e) => {
-    console.log("hii")
     const file = e.target.files[0];
     setSelectedFile(file);
     setProfilePhoto(URL.createObjectURL(file));
+
+    const newProfilePhotoURL = URL.createObjectURL(file);
+    setProfilePhoto(newProfilePhotoURL);
   };
 
 
