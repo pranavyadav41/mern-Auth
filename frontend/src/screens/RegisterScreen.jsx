@@ -70,8 +70,6 @@ function SignupScreen() {
         formData.append('password', password);
         formData.append('profilePhoto', profilePhoto);
 
-        console.log(formData)
-
         const res=await register(formData).unwrap();
         dispatch(setCredentials({...res}))
         navigate('/') 

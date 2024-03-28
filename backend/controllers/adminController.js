@@ -26,7 +26,7 @@ const authAdmin=asyncHandler(async(req,res)=>{
 //route Post/api/admin/logout
 //@access Public
 const logoutAdmin=asyncHandler(async(req,res)=>{
-    res.cookie("adminJwt","",{
+    res.cookie("adminjwt","",{
         httpOnly:true,
         expires:new Date(0),
     })

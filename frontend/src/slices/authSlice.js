@@ -5,6 +5,7 @@ const initialState={
         ('userInfo')) :null,
     adminInfo:localStorage.getItem('adminInfo') ? JSON.parse(localStorage.getItem
             ('adminInfo')) :null,
+    count:0
     
 }
 
@@ -32,6 +33,6 @@ const authSlice=createSlice({
     }
 })
 
-export const {setCredentials,logout,setAdminCredentials,adminLogout} = authSlice.actions;
+export const {setCredentials,logout,setAdminCredentials,adminLogout,add,decrease} = authSlice.actions;
 
 export default authSlice.reducer;

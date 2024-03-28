@@ -18,10 +18,8 @@ function ProfileScreen() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [profilePhoto,setProfilePhoto]=useState('');
   const [selectedFile,setSelectedFile]=useState(null)
-
-
-
-
+  const [selectedImageUrl, setSelectedImageUrl] = useState('');
+  
   const navigate =useNavigate()
   const dispatch=useDispatch()
 
@@ -32,20 +30,21 @@ function ProfileScreen() {
   useEffect(()=>{
     setName(userInfo.name);
     setEmail(userInfo.email);
-    if (userInfo.profilePhoto) {
-      setProfilePhoto(userInfo.profilePhoto);
-    } else {
-      setProfilePhoto(null);
-    }
+    setProfilePhoto(userInfo.profilePhoto || '')
   },[userInfo.setName,userInfo.setEmail,userInfo.profilePhoto]);
+
+  useEffect(()=>{
+    const storedProfilePhoto=localStorage.getItem('profilePhoto');
+    if(storedProfilePhoto){
+      setProfilePhoto(storedProfilePhoto)
+    }
+  },[])
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
-    setProfilePhoto(URL.createObjectURL(file));
-
-    const newProfilePhotoURL = URL.createObjectURL(file);
-    setProfilePhoto(newProfilePhotoURL);
+    const imageUrl = URL.createObjectURL(file); 
+    setSelectedImageUrl(imageUrl); 
   };
 
 
@@ -60,9 +59,8 @@ function ProfileScreen() {
         formData.append('name', name);
         formData.append('email', email);
         formData.append('password', password);
-        if (selectedFile) {
-          formData.append('profilePhoto', selectedFile);
-        }
+        formData.append('profilePhoto', selectedFile);
+          
         const res = await updateProfile(formData).unwrap();
         dispatch(setCredentials({...res}));
         toast.success('Profile-updated');
@@ -83,12 +81,19 @@ function ProfileScreen() {
       <Form onSubmit={submitHandler}>
 
         {/* Display profile photo if available */}
-        {profilePhoto && (
-          <Form.Group className='my-2'>
-            <Form.Label></Form.Label>
-            <Image src={profilePhotoURL} alt="Profile" style={{ width: '200px', height: '200px', borderRadius: '50%' }} />
-          </Form.Group>
-        )}
+        {selectedImageUrl ? (
+      <Image
+        src={selectedImageUrl}
+        alt="Selected Profile"
+        style={{ width: '200px', height: '200px', borderRadius: '50%' }}
+        className="mb-2"
+      />
+    ) : profilePhoto ? (
+      <Form.Group className='my-2'>
+        <Form.Label></Form.Label>
+        <Image src={profilePhotoURL} alt="Profile" style={{ width: '200px', height: '200px', borderRadius: '50%' }} />
+      </Form.Group>
+    ) : null}
          {/* Button to trigger file input */}
          <div className="d-flex justify-content-center align-items-center">
           <Button variant="primary" className="me-3" onClick={() => document.getElementById('fileInput').click()}>

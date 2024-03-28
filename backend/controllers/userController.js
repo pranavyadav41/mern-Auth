@@ -97,14 +97,15 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  console.log(req.body)
-  console.log(req.file)
   const user = await User.findById(req.user._id);
 
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.profilePhoto=req.file.filename || user.profilePhoto
+    
+    if(req.file){
+      user.profilePhoto=req.file.filename || user.profilePhoto
+    }
 
     if (req.body.password) {
       user.password = req.body.password;
@@ -116,6 +117,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      profilePhoto:updatedUser.profilePhoto
     });
   } else {
     res.status(404);
