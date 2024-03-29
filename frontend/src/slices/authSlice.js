@@ -29,10 +29,17 @@ const authSlice=createSlice({
         adminLogout:(state)=>{
             state.adminInfo=null
             localStorage.removeItem('adminInfo');
+        },
+        add:(state)=>{
+            
+                state.count=state.count+1
+        },
+        decrement:(state)=>{
+                state.count=state.count-3
         }
     }
 })
 
-export const {setCredentials,logout,setAdminCredentials,adminLogout,add,decrease} = authSlice.actions;
+export const {setCredentials,logout,setAdminCredentials,adminLogout,add,decrement} = authSlice.actions;
 
 export default authSlice.reducer;

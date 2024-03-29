@@ -30,7 +30,6 @@ function LoginScreen() {
     e.preventDefault();
     try {
       const res=await login({email,password}).unwrap();
-      console.log(res);
       dispatch(setCredentials({...res}))
       navigate('/')
     } catch (err) {
@@ -69,11 +68,12 @@ function LoginScreen() {
           </div>
         </Form.Group>
         {/* {isLoading && <Loader />} */}
-        <Button type='submit' variant="primary" className="mt-3">Sign In</Button>
+        <Button type='submit' variant="dark" className="mt-3">Sign In</Button>
+        {/* <Button  variant="secondary" className="mt-3" style={{marginLeft:"5px"}}  onClick={()=>navigate('/')}>Home</Button> */}
 
         <Row className="py-3">
           <Col className="text-center">
-            New Customer? <Link to='/signup'>Signup</Link>
+            New Customer? <Link style={{textDecoration: 'none' }} to='/signup'>Signup</Link><Link style={{marginLeft:"5px",textDecoration: 'none' }}to='/'>Home</Link>
           </Col>
         </Row>
       </Form>

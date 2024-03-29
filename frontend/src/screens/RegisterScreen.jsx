@@ -157,11 +157,12 @@ function SignupScreen() {
 
         {/* {isLoading && <Loader/>} */}
 
-        <Button type='submit' variant="primary" className="mt-3">Sign Up</Button>
+        <Button type='submit' variant="dark" className="mt-3">Sign Up</Button>
+        {/* <Button  variant="secondary" className="mt-3" style={{marginLeft:"5px"}}  onClick={()=>navigate('/')}>Home</Button> */}
 
         <Row className="py-3">
           <Col className="text-center">
-            Already have an account? <Link to='/signin'>Sign In</Link>
+            Already have an account? <Link style={{textDecoration: 'none' }} to='/signin'>Signin</Link> <Link style={{marginLeft:"5px",textDecoration: 'none' }}to='/'>Home</Link>
           </Col>
         </Row>
       </Form>
